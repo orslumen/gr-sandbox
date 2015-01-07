@@ -27,7 +27,7 @@ Things you may want to cover:
 Please feel free to use a different markup language if you do not plan to run
 <tt>rake doc:app</tt>.
 
-# reset to the DB and seed with some fake customers/consumers/users
+# reset to the DB and seed with some fake consumers/users
 be rake db:drop; be rake db:create; be rake db:migrate; be rake db:seed
 
 upload = Upload.new

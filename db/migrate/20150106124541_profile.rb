@@ -1,24 +1,17 @@
 class Profile < ActiveRecord::Migration
   def change
 
-    create_table :customers do |t|
-      t.string   :name,            null: false
-      t.timestamps
-    end
     create_table :consumers do |t|
-      t.integer  :customer_id,     null: false
       t.string   :name,            null: false
       t.timestamps
     end
     create_table :users do |t|
-      t.integer  :customer_id,     null: false
       t.integer  :consumer_id,     null: false
       t.string   :name,            null: false
       t.timestamps
     end
 
     create_table :uploads do |t|
-      t.integer  :customer_id,     null: false
       t.integer  :consumer_id,     null: false
       t.integer  :tag_id,          null: false
       t.integer  :user_id,         null: false
@@ -43,7 +36,6 @@ class Profile < ActiveRecord::Migration
     add_index :matches, [:tag_id, :graydon_id, :matched] # for combining organizations based on a tag with the external ID during that particular upload
 
     create_table :organizations do |t|
-      t.integer  :customer_id,   null: false
       t.integer  :consumer_id,   null: false
       t.integer  :graydon_id,    null: false
 
@@ -60,7 +52,6 @@ class Profile < ActiveRecord::Migration
     create_table :tags do |t|
       t.string   :name,            null: false
       t.string   :nature,          null: false # Graydon, consumer, consumer-upload
-      t.integer  :customer_id
       t.integer  :consumer_id
       t.integer  :parent_id
       t.string   :description

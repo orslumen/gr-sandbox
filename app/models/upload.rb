@@ -6,7 +6,6 @@ class Upload < ActiveRecord::Base
 
   attr_accessible :user_id, :claim_check, :upload_type
 
-  belongs_to :customer
   belongs_to :consumer
   belongs_to :user
   belongs_to :tag, autosave: true
@@ -25,7 +24,6 @@ class Upload < ActiveRecord::Base
 
   def set_defaults
     self.consumer = self.user.consumer if self.user
-    self.customer = self.consumer.customer if self.consumer
     self.status ||= :uploaded
     self.upload_type ||= :organizations
   end
@@ -34,10 +32,10 @@ class Upload < ActiveRecord::Base
   def set_tag
     return if tag
     tag = self.tag = Tag.new
-    tag.consumer_id = self.consumer_id
+    tag.consumer = self.consumer
     tag.name = "upload_#{self.user_id}_#{Time.now.to_i}"
     tag.description = "Uploaded on #{Time.now} by #{user_id}"
-    tag.nature = :consumer_upload
+    tag.nature = :upload
 
     true
   end

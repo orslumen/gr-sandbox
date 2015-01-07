@@ -7,5 +7,5 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 if Rails.env.test? || Rails.env.development?
-  Customer.seed!( 'Customer A', { 'Consumer A1' => ['Arie', 'Annie'], 'Consumer B1' => ['Barrie', 'Bonnie'] } )
+  Consumer.seed!( { 'Consumer A1' => ['Arie', 'Annie'], 'Consumer B1' => ['Barrie', 'Bonnie'] } )
 end

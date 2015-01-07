@@ -5,22 +5,18 @@ class Organization < ActiveRecord::Base
 
   attr_accessible :consumer_id, :graydon_id
 
-  before_validation :set_defaults
-
   validates_presence_of :consumer_id, :graydon_id
 
-  belongs_to :customer
   belongs_to :consumer
   has_and_belongs_to_many :tags
 
-  scope :by_tag, ->(tag) { joins(:tags).('tags.id = ?', tag.id) }
   scope :by_upload, ->(upload) { joins('join matches ON matches.graydon_id = organizations.graydon_id').where('matches.tag_id = ?', upload.tag_id).select('organizations.*, matches.external_id AS external_id') }
+  # @see http://tagging.pui.ch/post/37027745720/tags-database-schemas
+  scope :with_tag,  ->(tag)      { where('EXISTS (SELECT 1 FROM organizations_tags WHERE organizations_tags.organization_id = organizations.id AND organizations_tags.tag_id = ?)', tag.id) }
+  scope :with_any_tag, ->(tags)  { where('EXISTS (SELECT 1 FROM organizations_tags WHERE organizations_tags.organization_id = organizations.id AND organizations_tags.tag_id IN (?))', tags.map(&:id)) }
+  scope :with_all_tags, ->(tags) { tags = tags.uniq; where('(SELECT COUNT(*) FROM organizations_tags WHERE organizations_tags.organization_id = organizations.id AND organizations_tags.tag_id IN (?)) = ?', tags.map(&:id), tags.size) }
 
   private
-
-  def set_defaults
-    self.customer = self.consumer.customer if self.consumer
-  end
 
   def set_external_id
     @external_id = attributes['external_id']

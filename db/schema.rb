@@ -14,13 +14,6 @@
 ActiveRecord::Schema.define(version: 20150106124541) do
 
   create_table "consumers", force: true do |t|
-    t.integer  "customer_id", null: false
-    t.string   "name",        null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "customers", force: true do |t|
     t.string   "name",       null: false
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -41,7 +34,6 @@ ActiveRecord::Schema.define(version: 20150106124541) do
   add_index "matches", ["tag_id", "graydon_id", "matched"], name: "index_matches_on_tag_id_and_graydon_id_and_matched", using: :btree
 
   create_table "organizations", force: true do |t|
-    t.integer  "customer_id", null: false
     t.integer  "consumer_id", null: false
     t.integer  "graydon_id",  null: false
     t.datetime "created_at"
@@ -60,7 +52,6 @@ ActiveRecord::Schema.define(version: 20150106124541) do
   create_table "tags", force: true do |t|
     t.string   "name",        null: false
     t.string   "nature",      null: false
-    t.integer  "customer_id"
     t.integer  "consumer_id"
     t.integer  "parent_id"
     t.string   "description"
@@ -71,7 +62,6 @@ ActiveRecord::Schema.define(version: 20150106124541) do
   add_index "tags", ["consumer_id", "name"], name: "index_tags_on_consumer_id_and_name", unique: true, using: :btree
 
   create_table "uploads", force: true do |t|
-    t.integer  "customer_id", null: false
     t.integer  "consumer_id", null: false
     t.integer  "tag_id",      null: false
     t.integer  "user_id",     null: false
@@ -83,7 +73,6 @@ ActiveRecord::Schema.define(version: 20150106124541) do
   end
 
   create_table "users", force: true do |t|
-    t.integer  "customer_id", null: false
     t.integer  "consumer_id", null: false
     t.string   "name",        null: false
     t.datetime "created_at"
