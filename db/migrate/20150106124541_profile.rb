@@ -51,7 +51,7 @@ class Profile < ActiveRecord::Migration
 
     create_table :tags do |t|
       t.string   :name,            null: false
-      t.string   :nature,          null: false # Graydon, consumer, consumer-upload
+      t.string   :nature,          null: false # reserved, upload, search, folder
       t.integer  :consumer_id
       t.integer  :parent_id
       t.string   :description
