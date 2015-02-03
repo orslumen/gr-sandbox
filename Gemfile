@@ -29,6 +29,9 @@ gem 'jbuilder', '~> 1.2'
 
 gem 'protected_attributes'
 
+gem 'prawn'
+gem 'prawn-table'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
